@@ -188,7 +188,7 @@ export default function Landing() {
               <p className="font-semibold text-slate-700 mb-2">Messy papers & memory</p>
               <ul className="text-sm text-slate-600 list-disc pl-5 space-y-1">
                 <li>Scattered test results</li>
-                <li>Forgotten meds &amp; allergies</li>
+                <li>Forgotten meds & allergies</li>
                 <li>No clear timeline</li>
               </ul>
             </Glass>
