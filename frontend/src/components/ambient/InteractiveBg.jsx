@@ -69,7 +69,7 @@ export const InteractiveBg = () => {
     };
 
     const onDown = (e) => {
-      intensityRef.current = 2.2; // click boost
+      intensityRef.current = 1.7; // click boost (lower for softer)
       addPoint(e.clientX, e.clientY, 1);
     };
 
