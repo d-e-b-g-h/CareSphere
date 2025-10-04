@@ -185,7 +185,7 @@ export default function Landing() {
         <div className="grid md:grid-cols-2 gap-6 items-center">
           <div className="relative">
             <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
-              <p className="font-semibold text-slate-700 mb-2">Messy papers &amp; memory</p>
+              <p className="font-semibold text-slate-700 mb-2">Messy papers & memory</p>
               <ul className="text-sm text-slate-600 list-disc pl-5 space-y-1">
                 <li>Scattered test results</li>
                 <li>Forgotten meds &amp; allergies</li>
