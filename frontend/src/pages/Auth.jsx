@@ -99,6 +99,10 @@ function SignUpForm({ onSuccess }) {
             <label className="text-sm text-slate-700">Password</label>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" className="mt-1 bg-white/70" />
           </div>
+          <div>
+            <label className="text-sm text-slate-700">Confirm Password</label>
+            <Input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Re-enter your password" className="mt-1 bg-white/70" />
+          </div>
           <div className="md:col-span-2 flex items-center gap-3 mt-2">
             <Button disabled={!valid} type="submit" className="btn-primary rounded-full">Create Account</Button>
             <span className="text-sm text-slate-500">By continuing you accept our privacy-first, local demo.</span>
