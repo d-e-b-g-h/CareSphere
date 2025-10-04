@@ -5,6 +5,7 @@ import { Card, CardContent } from "../components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import { Input } from "../components/ui/input";
 import { toast } from "../components/ui/sonner";
+import { InteractiveBg } from "../components/ambient/InteractiveBg";
 import {
   ShieldCheck,
   Lock,
@@ -129,6 +130,10 @@ export default function Landing() {
 
   return (
     <div className="relative">
+      {/* Interactive background canvas (fixed) */}
+      <InteractiveBg />
+
+      {/* Floating Glass Nav */}
       <div ref={navRef} className="nav-header flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 pl-2">
           <div className="size-7 rounded-xl" style={{background: "var(--brand-mint)", border: "1px solid rgba(255,255,255,.7)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.6)"}} />
@@ -175,74 +180,68 @@ export default function Landing() {
         </div>
       </section>
 
-      <section id="problem" className="tint-section">
-        <div className="container space-xl">
-          <SectionTitle title="Clinics waste time. Emergencies are chaotic." subtitle="Collecting scattered histories slows care. Bystanders often don’t know what to share safely." align="left" />
-          <div className="grid md:grid-cols-2 gap-6 items-center">
-            <div className="relative">
-              <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
-                <p className="font-semibold text-slate-700 mb-2">Messy papers & memory</p>
-                <ul className="text-sm text-slate-600 list-disc pl-5 space-y-1">
-                  <li>Scattered test results</li>
-                  <li>Forgotten meds & allergies</li>
-                  <li>No clear timeline</li>
-                </ul>
-              </Glass>
-              <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px] absolute -right-6 -bottom-6 hidden md:block">
-                <p className="font-semibold text-slate-700 mb-2">Clean digital pack</p>
-                <p className="text-sm text-slate-600">One page. Actionable. Verifiable.</p>
-              </Glass>
-            </div>
-            <div><MockPackCard /></div>
+      <section id="problem" className="container space-xl">
+        <SectionTitle title="Clinics waste time. Emergencies are chaotic." subtitle="Collecting scattered histories slows care. Bystanders often don’t know what to share safely." align="left" />
+        <div className="grid md:grid-cols-2 gap-6 items-center">
+          <div className="relative">
+            <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
+              <p className="font-semibold text-slate-700 mb-2">Messy papers & memory</p>
+              <ul className="text-sm text-slate-600 list-disc pl-5 space-y-1">
+                <li>Scattered test results</li>
+                <li>Forgotten meds & allergies</li>
+                <li>No clear timeline</li>
+              </ul>
+            </Glass>
+            <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px] absolute -right-6 -bottom-6 hidden md:block">
+              <p className="font-semibold text-slate-700 mb-2">Clean digital pack</p>
+              <p className="text-sm text-slate-600">One page. Actionable. Verifiable.</p>
+            </Glass>
           </div>
+          <div><MockPackCard /></div>
         </div>
       </section>
 
-      <section id="unique" className="tint-section">
-        <div className="container space-xl">
-          <SectionTitle title="Preparation over hoarding. Privacy by default." subtitle="CareSphere is built to surface only what matters, when it matters — and keep everything else private." />
-          <div className="ai-grid">
-            {uniquePoints.map((u) => {
-              const I = ICONS[u.icon] || ShieldCheck;
-              return (
-                <div key={u.title} className="gradient-border">
-                  <div className="inner p-5 rounded-[15px]">
-                    <div className="flex items-start gap-3">
-                      <I className="size-5 text-emerald-600" />
-                      <div>
-                        <div className="font-semibold text-slate-800">{u.title}</div>
-                        <p className="text-sm text-slate-600">{u.desc}</p>
-                      </div>
+      <section id="unique" className="container space-xl">
+        <SectionTitle title="Preparation over hoarding. Privacy by default." subtitle="CareSphere is built to surface only what matters, when it matters — and keep everything else private." />
+        <div className="ai-grid">
+          {uniquePoints.map((u) => {
+            const I = ICONS[u.icon] || ShieldCheck;
+            return (
+              <div key={u.title} className="gradient-border">
+                <div className="inner p-5 rounded-[15px]">
+                  <div className="flex items-start gap-3">
+                    <I className="size-5 text-emerald-600" />
+                    <div>
+                      <div className="font-semibold text-slate-800">{u.title}</div>
+                      <p className="text-sm text-slate-600">{u.desc}</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      <section id="features" className="tint-section">
-        <div className="container space-xl">
-          <SectionTitle title="Everything You Need, Nothing You Don’t." />
-          <div className="ai-grid">
-            {features.map((f) => {
-              const I = ICONS[f.icon] || FileText;
-              return (
-                <div key={f.title} className="gradient-border">
-                  <div className="inner p-6">
-                    <div className="flex items-start gap-3">
-                      <I className="size-6 text-emerald-600 shrink-0" />
-                      <div>
-                        <h4 className="product-card-title">{f.title}</h4>
-                        <p className="product-card-description">{f.desc}</p>
-                      </div>
+      <section id="features" className="container space-xl">
+        <SectionTitle title="Everything You Need, Nothing You Don’t." />
+        <div className="ai-grid">
+          {features.map((f) => {
+            const I = ICONS[f.icon] || FileText;
+            return (
+              <div key={f.title} className="gradient-border">
+                <div className="inner p-6">
+                  <div className="flex items-start gap-3">
+                    <I className="size-6 text-emerald-600 shrink-0" />
+                    <div>
+                      <h4 className="product-card-title">{f.title}</h4>
+                      <p className="product-card-description">{f.desc}</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -268,31 +267,29 @@ export default function Landing() {
         </Accordion>
       </section>
 
-      <section id="impact" className="tint-section">
-        <div className="container space-xl">
-          <SectionTitle title="High Impact. Low Friction. Works When It Matters." />
-          <div className="ai-grid">
-            {whyChoose.map((w) => {
-              const I = ICONS[w.icon] || Activity;
-              return (
-                <Glass key={w.title} className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
-                  <div className="flex items-start gap-3">
-                    <I className="size-6 text-emerald-700" />
-                    <div>
-                      <div className="font-semibold text-slate-800">{w.title}</div>
-                      <p className="text-sm text-slate-600">{w.desc}</p>
-                    </div>
+      <section id="impact" className="container space-xl">
+        <SectionTitle title="High Impact. Low Friction. Works When It Matters." />
+        <div className="ai-grid">
+          {whyChoose.map((w) => {
+            const I = ICONS[w.icon] || Activity;
+            return (
+              <Glass key={w.title} className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
+                <div className="flex items-start gap-3">
+                  <I className="size-6 text-emerald-700" />
+                  <div>
+                    <div className="font-semibold text-slate-800">{w.title}</div>
+                    <p className="text-sm text-slate-600">{w.desc}</p>
                   </div>
-                </Glass>
-              );
-            })}
-          </div>
+                </div>
+              </Glass>
+            );
+          })}
         </div>
       </section>
 
       <section id="cta" className="container space-2xl">
         <div className="gradient-border">
-          <div className="inner rounded-3xl p-8 md:p-10" style={{background: "rgba(255,255,255,0.72)"}}>
+          <div className="inner rounded-3xl p-8 md:p-10" style={{background: "rgba(255,255,255,0.78)"}}>
             <div className="grid md:grid-cols-2 gap-6 items-center">
               <div>
                 <h3 className="heading-3 mb-2">Start Your CareSphere Today</h3>
