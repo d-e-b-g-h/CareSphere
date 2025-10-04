@@ -1,3 +1,7 @@
+/*
+Adjustable trail parameters for quick tuning
+*/
+
 import React, { useEffect, useRef } from "react";
 
 // Premium interactive canvas background
