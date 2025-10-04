@@ -82,7 +82,7 @@ const EmailCapture = ({ compact = false }) => {
     }
     localStorage.setItem("cs_demo_email", email);
     toast("Welcome to CareSphere — creating your pack locally.");
-    navigate("/demo");
+    navigate("/auth");
   };
 
   return (
@@ -137,8 +137,11 @@ export default function Landing() {
           ))}
         </div>
         <div className="flex items-center gap-2 pr-2">
-          <Link to="/demo">
-            <Button className="btn-secondary rounded-full">Get Started</Button>
+          <Link to="/auth">
+            <Button className="btn-secondary rounded-full">Sign In</Button>
+          </Link>
+          <Link to="/auth">
+            <Button className="btn-primary rounded-full">Get Started</Button>
           </Link>
         </div>
       </div>
@@ -149,7 +152,7 @@ export default function Landing() {
           <h1 className="hero-title">Your Health, Prepared & Private.</h1>
           <p className="hero-subtitle">Turn everyday symptoms and health info into a clinician-ready Prepared Patient Pack and an ultra-minimal Emergency QR.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
-            <Link to="/demo">
+            <Link to="/auth">
               <Button className="btn-primary rounded-full">Get Started <ArrowRight className="ml-2 size-4" /></Button>
             </Link>
             <Button onClick={() => scrollTo('#features')} className="btn-secondary rounded-full" variant="outline">See Features</Button>
