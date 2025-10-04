@@ -26,11 +26,15 @@ import { features, navLinks, techPoints, uniquePoints, whyChoose } from "../mock
 const ICONS = { ShieldCheck, Lock, BadgeCheck, ClipboardCheck, QrCode, FileText, Stethoscope, Share2, Activity, Gavel, TimerReset };
 
 const Glass = ({ className = "", children }) => (
-  <div className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ${className}`}>{children}</div>
+  <div
+    className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ${className}`}
+  >
+    {children}
+  </div>
 );
 
 const SectionTitle = ({ eyebrow, title, subtitle, align = "center" }) => (
-  <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}>
+  <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}> 
     {eyebrow ? <div className="text-sm tracking-wide text-emerald-700/80 mb-2">{eyebrow}</div> : null}
     <h2 className="heading-2 mb-3 text-balance" style={{color: "var(--brand-jade)"}}>{title}</h2>
     {subtitle ? <p className="body-large" style={{color: "var(--brand-muted)"}}>{subtitle}</p> : null}
@@ -91,8 +95,16 @@ const EmailCapture = ({ compact = false }) => {
 
   return (
     <form onSubmit={onSubmit} className={`flex ${compact ? "flex-col sm:flex-row" : "flex-col md:flex-row"} gap-3 w-full max-w-xl`}>
-      <Input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-white/70 border-white/40 backdrop-blur-md focus-visible:ring-emerald-500" />
-      <Button type="submit" className="btn-primary rounded-full px-6 py-6 text-white" variant="default">Create Your Pack</Button>
+      <Input
+        type="email"
+        placeholder="you@example.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="bg-white/70 border-white/40 backdrop-blur-md focus-visible:ring-emerald-500"
+      />
+      <Button type="submit" className="btn-primary rounded-full px-6 py-6 text-white" variant="default">
+        Create Your Pack
+      </Button>
     </form>
   );
 };
@@ -137,12 +149,13 @@ export default function Landing() {
       <div ref={navRef} className="nav-header flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 pl-2">
           <div className="size-7 rounded-xl" style={{background: "var(--brand-mint)", border: "1px solid rgba(255,255,255,.7)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.6)"}} />
-          <span className="font-semibold tracking-tight" style={{color: "var(--brand-jade)"}}>CareSphere</span>
         </Link>
         <div className="hidden md:flex items-center gap-2">
-          {navLinks.map((n) => (
-            <a key={n.href} href={n.href} className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo(n.href); }}>{n.label}</a>
-          ))}
+          <a href="#features" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('#features'); }}>Features</a>
+          <a href="#unique" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('#unique'); }}>Why Unique</a>
+          <a href="#how" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('#how'); }}>How It Works</a>
+          <a href="#impact" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('#impact'); }}>Why Choose</a>
+          <Link to="/about" className="nav-link">About</Link>
         </div>
         <div className="flex items-center gap-2 pr-2">
           <Link to="/auth"><Button className="btn-secondary rounded-full">Sign In</Button></Link>
@@ -153,18 +166,24 @@ export default function Landing() {
       <div className="blob blob-1" />
       <div className="blob blob-2" />
 
+      {/* Hero Section */}
       <section id="hero" className="hero-section">
         <div ref={heroRef} className="hero-content">
           <h1 className="hero-title">Your Health, Prepared & Private.</h1>
           <p className="hero-subtitle">Turn everyday symptoms and health info into a clinician-ready Prepared Patient Pack and an ultra-minimal Emergency QR.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
-            <Link to="/auth"><Button className="btn-primary rounded-full">Get Started <ArrowRight className="ml-2 size-4" /></Button></Link>
+            <Link to="/auth">
+              <Button className="btn-primary rounded-full">Get Started <ArrowRight className="ml-2 size-4" /></Button>
+            </Link>
             <Button onClick={() => scrollTo('#features')} className="btn-secondary rounded-full" variant="outline">See Features</Button>
           </div>
           <HeroChips />
 
+          {/* Visual */}
           <div className="mt-10 grid md:grid-cols-2 gap-6 items-center">
-            <div className="order-2 md:order-1 text-left"><MockPackCard /></div>
+            <div className="order-2 md:order-1 text-left">
+              <MockPackCard />
+            </div>
             <div className="order-1 md:order-2">
               <Glass className="rounded-3xl p-6 bg-white/55 backdrop-blur-[20px]">
                 <div className="flex items-center gap-4">
@@ -180,8 +199,13 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Problem Statement */}
       <section id="problem" className="container space-xl">
-        <SectionTitle title="Clinics waste time. Emergencies are chaotic." subtitle="Collecting scattered histories slows care. Bystanders often don’t know what to share safely." align="left" />
+        <SectionTitle
+          title="Clinics waste time. Emergencies are chaotic."
+          subtitle="Collecting scattered histories slows care. Bystanders often don’t know what to share safely."
+          align="left"
+        />
         <div className="grid md:grid-cols-2 gap-6 items-center">
           <div className="relative">
             <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
@@ -197,12 +221,18 @@ export default function Landing() {
               <p className="text-sm text-slate-600">One page. Actionable. Verifiable.</p>
             </Glass>
           </div>
-          <div><MockPackCard /></div>
+          <div>
+            <MockPackCard />
+          </div>
         </div>
       </section>
 
+      {/* Unique */}
       <section id="unique" className="container space-xl">
-        <SectionTitle title="Preparation over hoarding. Privacy by default." subtitle="CareSphere is built to surface only what matters, when it matters — and keep everything else private." />
+        <SectionTitle
+          title="Preparation over hoarding. Privacy by default."
+          subtitle="CareSphere is built to surface only what matters, when it matters — and keep everything else private."
+        />
         <div className="ai-grid">
           {uniquePoints.map((u) => {
             const I = ICONS[u.icon] || ShieldCheck;
@@ -223,6 +253,7 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Features */}
       <section id="features" className="container space-xl">
         <SectionTitle title="Everything You Need, Nothing You Don’t." />
         <div className="ai-grid">
@@ -245,6 +276,7 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Technical Approach (Accordion) */}
       <section id="how" className="container space-xl">
         <SectionTitle title="How It Works Under the Hood" subtitle="A minimal, verifiable, privacy-first flow." />
         <Accordion type="single" collapsible className="max-w-2xl mx-auto">
@@ -267,6 +299,7 @@ export default function Landing() {
         </Accordion>
       </section>
 
+      {/* Why Choose */}
       <section id="impact" className="container space-xl">
         <SectionTitle title="High Impact. Low Friction. Works When It Matters." />
         <div className="ai-grid">
@@ -287,6 +320,7 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* CTA */}
       <section id="cta" className="container space-2xl">
         <div className="gradient-border">
           <div className="inner rounded-3xl p-8 md:p-10" style={{background: "rgba(255,255,255,0.78)"}}>
@@ -296,17 +330,20 @@ export default function Landing() {
                 <p className="text-slate-600 mb-4">No account needed. Data stays private until you share.</p>
                 <EmailCapture />
               </div>
-              <div className="md:justify-self-end"><MockPackCard /></div>
+              <div className="md:justify-self-end">
+                <MockPackCard />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="border-t border-white/40 bg-white/60 backdrop-blur-md">
         <div className="container py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-slate-600">© 2025 CareSphere. All rights reserved.</div>
           <nav className="flex items-center gap-4 text-sm">
-            <a className="nav-link" href="#">About</a>
+            <Link className="nav-link" to="/about">About</Link>
             <a className="nav-link" href="#">FAQ</a>
             <a className="nav-link" href="#">Privacy Policy</a>
             <a className="nav-link" href="#">Contact</a>
