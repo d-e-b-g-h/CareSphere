@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom font (Inter) to avoid system-UI default */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap');
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -15,8 +18,6 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
-
-
 
 @layer base {
   :root {
@@ -44,8 +45,12 @@ code {
         --chart-3: 197 37% 24%;
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-    }
+        --radius: 0.75rem;
+
+        /* CareSphere theme */
+        --cs-emerald: 90 70% 50%;
+        --cs-blue: 200 80% 45%;
+  }
   .dark {
         --background: 0 0% 3.9%;
         --foreground: 0 0% 98%;
@@ -71,16 +76,69 @@ code {
         --chart-3: 30 80% 55%;
         --chart-4: 280 65% 60%;
         --chart-5: 340 75% 55%;
-    }
+  }
 }
 
-
-
 @layer base {
-  * {
-    @apply border-border;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+/* Liquid crystal glass theme utilities */
+@layer components {
+  .hero-section {
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(148, 242, 127, 0.25), transparent 60%),
+      radial-gradient(1000px 500px at 90% 20%, rgba(56, 189, 248, 0.20), transparent 60%),
+      radial-gradient(800px 400px at 50% 90%, rgba(255, 200, 112, 0.18), transparent 60%);
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 7rem 1.5rem 3rem;
+  }
+  .hero-content { max-width: 1100px; margin: 0 auto; }
+  .hero-title { font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.02em; color: rgb(0,55,32); }
+  .hero-subtitle { font-size: clamp(1.1rem, 3vw, 1.25rem); color: rgb(71,85,105); }
+
+  .nav-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.5rem 0.75rem; height: 3.5rem;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 0.5px solid rgba(255,255,255,0.6);
+    border-radius: 9999px; margin: 1.25rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+  @media (max-width: 768px) {
+    .nav-header { margin: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  }
+
+  .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+
+  .product-card { border-radius: 12px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; cursor: pointer; position: relative; overflow: hidden; }
+  .product-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+  .product-card-title { font-weight: 600; font-size: 1.125rem; margin-bottom: 6px; color: rgb(0,55,32); }
+  .product-card-description { font-size: .95rem; color: rgb(71,85,105); margin: 0; }
+
+  .btn-primary { background: linear-gradient(135deg, #8FEC78, #81DD67); color: white; border: none; padding: 12px 20px; font-weight: 600; transition: transform .2s ease, box-shadow .2s ease; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(148, 242, 127, 0.35); }
+  .btn-secondary { background: transparent; color: rgb(0,55,32); border: 1px solid rgba(0,0,0,0.1); padding: 12px 20px; font-weight: 500; }
+  .btn-secondary:hover { background: rgba(0,0,0,0.04); }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .space-xl { margin-top: 3rem; margin-bottom: 3rem; }
+  .space-2xl { margin-top: 4rem; margin-bottom: 4rem; }
+
+  .heading-2 { font-weight: 700; font-size: clamp(1.875rem, 4vw, 3rem); line-height: .95; letter-spacing: -0.015em; }
+  .heading-3 { font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.2; }
+  .body-large { font-size: clamp(1.05rem, 2.5vw, 1.2rem); line-height: 1.6; }
+
+  .nav-link { color: rgb(100,116,139); font-weight: 500; padding: 6px 12px; border-radius: 9999px; transition: color .2s ease, background .2s ease; }
+  .nav-link:hover { color: rgb(0,55,32); background: rgba(0,0,0,0.04); }
+
+  .glass-panel { background: rgba(255,255,255,0.58); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border-radius: 16px; }
 }

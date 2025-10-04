@@ -1,12 +1,14 @@
 import { useEffect } from "react";
-import "@/App.css";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
+import Landing, { DemoPage } from "./pages/Landing";
+import { Toaster } from "./components/ui/sonner";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
+const HomePlaceholder = () => {
   const helloWorldApi = async () => {
     try {
       const response = await axios.get(`${API}/`);
@@ -20,21 +22,7 @@ const Home = () => {
     helloWorldApi();
   }, []);
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+  return <Landing />;
 };
 
 function App() {
@@ -42,11 +30,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          <Route path="/" element={<HomePlaceholder />} />
+          <Route path="/demo" element={<DemoPage />} />
         </Routes>
       </BrowserRouter>
+      <Toaster position="top-right" richColors />
     </div>
   );
 }
