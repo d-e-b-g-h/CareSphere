@@ -2,147 +2,144 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom font (Inter) to avoid system-UI default */
+/* Premium font (Inter) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 body {
-    margin: 0;
-    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+/****************************
+  THEME TOKENS (PREMIUM GLASS)
+*****************************/
 @layer base {
   :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.75rem;
+    /* Tailwind design tokens */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 164 69% 22%; /* deep jade */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 12%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 210 7% 40%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 12%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 164 69% 22%;
+    --radius: 0.75rem;
 
-        /* CareSphere theme */
-        --cs-emerald: 90 70% 50%;
-        --cs-blue: 200 80% 45%;
+    /* Brand palette */
+    --brand-ink: #0e1a16;        /* primary headings */
+    --brand-jade: #0f473d;       /* deep jade */
+    --brand-mint: #31c4a1;       /* accent mint */
+    --brand-pearl: #f7f9fb;      /* background pearl */
+    --brand-mist: #e9f4ff;       /* mist blue */
+    --brand-champagne: #f6eadf;  /* warm accent */
+    --brand-muted: #5b6b66;      /* body text */
+
+    /* Shadows */
+    --elev-1: 0 8px 30px rgba(0,0,0,0.06);
+    --elev-2: 0 18px 50px rgba(0,0,0,0.10);
   }
-  .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
+
+  .dark { /* keep default dark tokens for completeness */
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 164 69% 52%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 164 69% 52%;
   }
 }
 
 @layer base {
   * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
+  body { background: var(--brand-pearl); color: hsl(var(--foreground)); }
 }
 
-/* Liquid crystal glass theme utilities */
+/***********************
+  PREMIUM COMPONENTS
+***********************/
 @layer components {
+  /* Hero with restrained gradients (<=20% area) */
   .hero-section {
     background:
-      radial-gradient(1200px 600px at 10% 10%, rgba(148, 242, 127, 0.25), transparent 60%),
-      radial-gradient(1000px 500px at 90% 20%, rgba(56, 189, 248, 0.20), transparent 60%),
-      radial-gradient(800px 400px at 50% 90%, rgba(255, 200, 112, 0.18), transparent 60%);
-    min-height: 92vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 7rem 1.5rem 3rem;
+      radial-gradient(1200px 600px at 10% 10%, color-mix(in oklab, var(--brand-mist) 55%, transparent) 0%, transparent 60%),
+      radial-gradient(1000px 500px at 90% 20%, color-mix(in oklab, var(--brand-champagne) 45%, transparent) 0%, transparent 60%),
+      radial-gradient(800px 400px at 50% 90%, color-mix(in oklab, #c8f5e8 40%, transparent) 0%, transparent 60%);
+    min-height: 92vh; display: flex; align-items: center; justify-content: center;
+    position: relative; padding: 7rem 1.5rem 3rem;
   }
   .hero-content { max-width: 1100px; margin: 0 auto; }
-  .hero-title { font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.02em; color: rgb(0,55,32); }
-  .hero-subtitle { font-size: clamp(1.1rem, 3vw, 1.25rem); color: rgb(71,85,105); }
+  .hero-title { font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.02em; color: var(--brand-jade); }
+  .hero-subtitle { font-size: clamp(1.1rem, 3vw, 1.25rem); color: var(--brand-muted); }
 
-  .nav-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.5rem 0.75rem; height: 3.5rem;
-    background: rgba(255,255,255,0.65);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 0.5px solid rgba(255,255,255,0.6);
-    border-radius: 9999px; margin: 1.25rem;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  }
-  @media (max-width: 768px) {
-    .nav-header { margin: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
-  }
+  /* Floating glass nav */
+  .nav-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; height: 3.5rem; background: rgba(255,255,255,0.66); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); border: 0.5px solid rgba(255,255,255,0.6); border-radius: 9999px; margin: 1.25rem; box-shadow: var(--elev-1); }
+  @media (max-width: 768px) { .nav-header { margin: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.08); } }
 
-  .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
-
-  .product-card { border-radius: 12px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; cursor: pointer; position: relative; overflow: hidden; }
-  .product-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
-  .product-card-title { font-weight: 600; font-size: 1.125rem; margin-bottom: 6px; color: rgb(0,55,32); }
-  .product-card-description { font-size: .95rem; color: rgb(71,85,105); margin: 0; }
-
-  .btn-primary { background: linear-gradient(135deg, #8FEC78, #81DD67); color: white; border: none; padding: 12px 20px; font-weight: 600; transition: transform .2s ease, box-shadow .2s ease; }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(148, 242, 127, 0.35); }
-  .btn-secondary { background: transparent; color: rgb(0,55,32); border: 1px solid rgba(0,0,0,0.1); padding: 12px 20px; font-weight: 500; }
-  .btn-secondary:hover { background: rgba(0,0,0,0.04); }
-
+  /* Layout */
   .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
   .space-xl { margin-top: 3rem; margin-bottom: 3rem; }
   .space-2xl { margin-top: 4rem; margin-bottom: 4rem; }
+  .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
 
-  .heading-2 { font-weight: 700; font-size: clamp(1.875rem, 4vw, 3rem); line-height: .95; letter-spacing: -0.015em; }
-  .heading-3 { font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.2; }
-  .body-large { font-size: clamp(1.05rem, 2.5vw, 1.2rem); line-height: 1.6; }
+  /* Cards */
+  .product-card { border-radius: 14px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; cursor: pointer; overflow: hidden; background: rgba(255,255,255,0.72); backdrop-filter: blur(14px) saturate(140%); box-shadow: var(--elev-1); }
+  .product-card:hover { transform: translateY(-2px); box-shadow: var(--elev-2); }
+  .product-card-title { font-weight: 700; font-size: 1.125rem; margin-bottom: 6px; color: var(--brand-jade); }
+  .product-card-description { font-size: .95rem; color: var(--brand-muted); margin: 0; }
 
-  .nav-link { color: rgb(100,116,139); font-weight: 500; padding: 6px 12px; border-radius: 9999px; transition: color .2s ease, background .2s ease; }
-  .nav-link:hover { color: rgb(0,55,32); background: rgba(0,0,0,0.04); }
+  /* Buttons */
+  .btn-primary { background: linear-gradient(135deg, var(--brand-mint), #19a17b); color: white; border: none; padding: 12px 20px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 8px 22px rgba(25,161,123,0.28); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(25,161,123,0.34); }
+  .btn-secondary { background: transparent; color: var(--brand-jade); border: 1px solid rgba(0,0,0,0.1); padding: 12px 20px; font-weight: 600; }
+  .btn-secondary:hover { background: rgba(0,0,0,0.04); }
 
-  .glass-panel { background: rgba(255,255,255,0.58); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border-radius: 16px; }
+  /* Typography */
+  .heading-2 { font-weight: 800; font-size: clamp(1.875rem, 4vw, 3rem); line-height: .95; letter-spacing: -0.015em; color: var(--brand-jade); }
+  .heading-3 { font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.2; color: var(--brand-jade); }
+  .body-large { font-size: clamp(1.05rem, 2.5vw, 1.2rem); line-height: 1.6; color: var(--brand-muted); }
+
+  /* Links */
+  .nav-link { color: #6b7c76; font-weight: 600; padding: 6px 12px; border-radius: 9999px; transition: color .2s ease, background .2s ease; }
+  .nav-link:hover { color: var(--brand-jade); background: rgba(0,0,0,0.04); }
+  .link-text { color: var(--brand-jade); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+  /* Glass helper */
+  .glass-panel { background: rgba(255,255,255,0.62); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border-radius: 16px; }
 }
 
-/* Improve anchor scrolling for fixed glass nav */
+/* Smooth anchor scroll with fixed nav offset */
 html { scroll-behavior: smooth; }
 section { scroll-margin-top: 110px; }
