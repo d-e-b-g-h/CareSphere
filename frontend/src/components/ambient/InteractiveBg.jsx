@@ -75,7 +75,7 @@ export const InteractiveBg = () => {
 
     const fade = () => {
       // Subtle alpha wipe to create persistence without harsh clears
-      ctx.fillStyle = "rgba(230, 238, 236, 0.06)"; // matches page tint
+      ctx.fillStyle = "rgba(230, 238, 236, 0.04)"; // softer fade to keep trails lighter
       ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     };
 
