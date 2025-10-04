@@ -146,7 +146,7 @@ export default function Landing() {
       {/* Hero Section */}
       <section id="hero" className="hero-section">
         <div ref={heroRef} className="hero-content">
-          <h1 className="hero-title">Your Health, Prepared &amp; Private.</h1>
+          <h1 className="hero-title">Your Health, Prepared & Private.</h1>
           <p className="hero-subtitle">Turn everyday symptoms and health info into a clinician-ready Prepared Patient Pack and an ultra-minimal Emergency QR.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
             <Link to="/demo">
