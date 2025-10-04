@@ -49,6 +49,7 @@ code {
     --brand-ink: #0e1a16;        /* primary headings */
     --brand-jade: #0f473d;       /* deep jade */
     --brand-mint: #31c4a1;       /* accent mint */
+    --brand-mint-strong: #19a17b;
     --brand-pearl: #f7f9fb;      /* background pearl */
     --brand-mist: #e9f4ff;       /* mist blue */
     --brand-champagne: #f6eadf;  /* warm accent */
@@ -98,14 +99,21 @@ code {
       radial-gradient(1000px 500px at 90% 20%, color-mix(in oklab, var(--brand-champagne) 45%, transparent) 0%, transparent 60%),
       radial-gradient(800px 400px at 50% 90%, color-mix(in oklab, #c8f5e8 40%, transparent) 0%, transparent 60%);
     min-height: 92vh; display: flex; align-items: center; justify-content: center;
-    position: relative; padding: 7rem 1.5rem 3rem;
+    position: relative; padding: 7rem 1.5rem 3rem; overflow: hidden;
   }
-  .hero-content { max-width: 1100px; margin: 0 auto; }
+  .hero-content { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
   .hero-title { font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.02em; color: var(--brand-jade); }
   .hero-subtitle { font-size: clamp(1.1rem, 3vw, 1.25rem); color: var(--brand-muted); }
 
+  /* Decorative floating blobs */
+  .blob { position: absolute; border-radius: 9999px; filter: blur(30px); opacity: .5; pointer-events: none; }
+  .blob-1 { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #dff7ef, transparent 60%); top: -80px; left: -60px; animation: float 14s ease-in-out infinite; }
+  .blob-2 { width: 560px; height: 560px; background: radial-gradient(circle at 70% 40%, #ffeede, transparent 60%); bottom: -120px; right: -120px; animation: float 16s ease-in-out infinite; }
+  @keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-12px) } }
+
   /* Floating glass nav */
-  .nav-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; height: 3.5rem; background: rgba(255,255,255,0.66); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); border: 0.5px solid rgba(255,255,255,0.6); border-radius: 9999px; margin: 1.25rem; box-shadow: var(--elev-1); }
+  .nav-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; height: 3.5rem; background: rgba(255,255,255,0.54); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); border: 0.5px solid rgba(255,255,255,0.6); border-radius: 9999px; margin: 1.25rem; box-shadow: var(--elev-1); transition: all .25s ease; }
+  .nav-header.scrolled { background: rgba(255,255,255,0.78); box-shadow: var(--elev-2); }
   @media (max-width: 768px) { .nav-header { margin: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.08); } }
 
   /* Layout */
@@ -114,14 +122,21 @@ code {
   .space-2xl { margin-top: 4rem; margin-bottom: 4rem; }
   .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
 
+  /* Chips */
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 9999px; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.08); backdrop-filter: blur(12px); font-weight: 600; color: var(--brand-jade); }
+
   /* Cards */
   .product-card { border-radius: 14px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; cursor: pointer; overflow: hidden; background: rgba(255,255,255,0.72); backdrop-filter: blur(14px) saturate(140%); box-shadow: var(--elev-1); }
   .product-card:hover { transform: translateY(-2px); box-shadow: var(--elev-2); }
   .product-card-title { font-weight: 700; font-size: 1.125rem; margin-bottom: 6px; color: var(--brand-jade); }
   .product-card-description { font-size: .95rem; color: var(--brand-muted); margin: 0; }
 
+  /* Gradient border utility */
+  .gradient-border { position: relative; background: linear-gradient(135deg, rgba(49,196,161,.5), rgba(233,244,255,.5)); padding: 1px; border-radius: 16px; }
+  .gradient-border > .inner { background: rgba(255,255,255,0.7); backdrop-filter: blur(14px); border-radius: 15px; }
+
   /* Buttons */
-  .btn-primary { background: linear-gradient(135deg, var(--brand-mint), #19a17b); color: white; border: none; padding: 12px 20px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 8px 22px rgba(25,161,123,0.28); }
+  .btn-primary { background: linear-gradient(135deg, var(--brand-mint), var(--brand-mint-strong)); color: white; border: none; padding: 12px 20px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 8px 22px rgba(25,161,123,0.28); }
   .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(25,161,123,0.34); }
   .btn-secondary { background: transparent; color: var(--brand-jade); border: 1px solid rgba(0,0,0,0.1); padding: 12px 20px; font-weight: 600; }
   .btn-secondary:hover { background: rgba(0,0,0,0.04); }

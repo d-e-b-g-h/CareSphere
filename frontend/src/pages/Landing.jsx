@@ -18,7 +18,7 @@ import {
   Activity,
   Gavel,
   TimerReset,
-  Mail,
+  Check,
 } from "lucide-react";
 import { features, navLinks, techPoints, uniquePoints, whyChoose } from "../mock/mock";
 
@@ -36,8 +36,8 @@ const Glass = ({ className = "", children }) => (
 const SectionTitle = ({ eyebrow, title, subtitle, align = "center" }) => (
   <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}> 
     {eyebrow ? <div className="text-sm tracking-wide text-emerald-700/80 mb-2">{eyebrow}</div> : null}
-    <h2 className="heading-2 mb-3 text-balance text-[rgb(0,55,32)]">{title}</h2>
-    {subtitle ? <p className="body-large text-slate-600">{subtitle}</p> : null}
+    <h2 className="heading-2 mb-3 text-balance" style={{color: "var(--brand-jade)"}}>{title}</h2>
+    {subtitle ? <p className="body-large" style={{color: "var(--brand-muted)"}}>{subtitle}</p> : null}
   </div>
 );
 
@@ -69,6 +69,14 @@ const MockPackCard = () => (
       </div>
     </div>
   </Glass>
+);
+
+const HeroChips = () => (
+  <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+    {["Client-side encrypted", "Offline emergency QR", "No account needed"].map((t) => (
+      <span key={t} className="chip"><Check className="size-4" />{t}</span>
+    ))}
+  </div>
 );
 
 const EmailCapture = ({ compact = false }) => {
@@ -103,6 +111,7 @@ const EmailCapture = ({ compact = false }) => {
 
 export default function Landing() {
   const heroRef = useRef(null);
+  const navRef = useRef(null);
 
   useEffect(() => {
     // subtle entry animation
@@ -116,6 +125,16 @@ export default function Landing() {
         el.style.transform = "translateY(0)";
       });
     }
+
+    // nav scroll state
+    const nav = navRef.current;
+    const onScroll = () => {
+      if (!nav) return;
+      if (window.scrollY > 10) nav.classList.add("scrolled"); else nav.classList.remove("scrolled");
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollTo = (id) => {
@@ -126,10 +145,10 @@ export default function Landing() {
   return (
     <div className="relative">
       {/* Floating Glass Nav */}
-      <div className="nav-header flex items-center justify-between">
+      <div ref={navRef} className="nav-header flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 pl-2">
-          <div className="size-7 rounded-xl bg-emerald-400/70 border border-white/60 shadow-inner" />
-          <span className="font-semibold tracking-tight text-slate-800">CareSphere</span>
+          <div className="size-7 rounded-xl" style={{background: "var(--brand-mint)", border: "1px solid rgba(255,255,255,.7)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.6)"}} />
+          <span className="font-semibold tracking-tight" style={{color: "var(--brand-jade)"}}>CareSphere</span>
         </Link>
         <div className="hidden md:flex items-center gap-2">
           {navLinks.map((n) => (
@@ -146,6 +165,10 @@ export default function Landing() {
         </div>
       </div>
 
+      {/* Decorative floating blobs behind hero */}
+      <div className="blob blob-1" />
+      <div className="blob blob-2" />
+
       {/* Hero Section */}
       <section id="hero" className="hero-section">
         <div ref={heroRef} className="hero-content">
@@ -157,6 +180,7 @@ export default function Landing() {
             </Link>
             <Button onClick={() => scrollTo('#features')} className="btn-secondary rounded-full" variant="outline">See Features</Button>
           </div>
+          <HeroChips />
 
           {/* Visual */}
           <div className="mt-10 grid md:grid-cols-2 gap-6 items-center">
@@ -216,15 +240,17 @@ export default function Landing() {
           {uniquePoints.map((u) => {
             const I = ICONS[u.icon] || ShieldCheck;
             return (
-              <Glass key={u.title} className="rounded-2xl p-5 bg-white/60 backdrop-blur-[14px]">
-                <div className="flex items-start gap-3">
-                  <I className="size-5 text-emerald-600" />
-                  <div>
-                    <div className="font-semibold text-slate-800">{u.title}</div>
-                    <p className="text-sm text-slate-600">{u.desc}</p>
+              <div key={u.title} className="gradient-border">
+                <div className="inner p-5 rounded-[15px]">
+                  <div className="flex items-start gap-3">
+                    <I className="size-5 text-emerald-600" />
+                    <div>
+                      <div className="font-semibold text-slate-800">{u.title}</div>
+                      <p className="text-sm text-slate-600">{u.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </Glass>
+              </div>
             );
           })}
         </div>
@@ -237,8 +263,8 @@ export default function Landing() {
           {features.map((f) => {
             const I = ICONS[f.icon] || FileText;
             return (
-              <Card key={f.title} className="product-card bg-white/70 border-white/50 backdrop-blur-[14px]">
-                <CardContent className="p-6">
+              <div key={f.title} className="gradient-border">
+                <div className="inner p-6">
                   <div className="flex items-start gap-3">
                     <I className="size-6 text-emerald-600 shrink-0" />
                     <div>
@@ -246,8 +272,8 @@ export default function Landing() {
                       <p className="product-card-description">{f.desc}</p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             );
           })}
         </div>
@@ -299,18 +325,20 @@ export default function Landing() {
 
       {/* CTA */}
       <section id="cta" className="container space-2xl">
-        <Glass className="rounded-3xl p-8 md:p-10 bg-emerald-50/60 backdrop-blur-[20px] border-emerald-200/60">
-          <div className="grid md:grid-cols-2 gap-6 items-center">
-            <div>
-              <h3 className="heading-3 mb-2">Start Your CareSphere Today</h3>
-              <p className="text-slate-600 mb-4">No account needed. Data stays private until you share.</p>
-              <EmailCapture />
-            </div>
-            <div className="md:justify-self-end">
-              <MockPackCard />
+        <div className="gradient-border">
+          <div className="inner rounded-3xl p-8 md:p-10" style={{background: "rgba(255,255,255,0.72)"}}>
+            <div className="grid md:grid-cols-2 gap-6 items-center">
+              <div>
+                <h3 className="heading-3 mb-2">Start Your CareSphere Today</h3>
+                <p className="text-slate-600 mb-4">No account needed. Data stays private until you share.</p>
+                <EmailCapture />
+              </div>
+              <div className="md:justify-self-end">
+                <MockPackCard />
+              </div>
             </div>
           </div>
-        </Glass>
+        </div>
       </section>
 
       {/* Footer */}
@@ -346,23 +374,25 @@ export function DemoPage() {
   return (
     <div className="container py-20">
       <h1 className="heading-2 mb-4">Create Your Pack</h1>
-      <p className="body-medium text-slate-600 mb-8">This is a mock demo. No data leaves your browser.</p>
-      <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
-        <form onSubmit={save} className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className="text-sm text-slate-700">Full Name</label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Alex Patient" className="mt-1 bg-white/70" />
-          </div>
-          <div>
-            <label className="text-sm text-slate-700">Email</label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="mt-1 bg-white/70" />
-          </div>
-          <div className="sm:col-span-2 flex items-center gap-3 mt-2">
-            <Button type="submit" className="btn-primary rounded-full">Save</Button>
-            {saved ? <span className="text-sm text-emerald-700">Saved ✓</span> : null}
-          </div>
-        </form>
-      </Glass>
+      <p className="body-large mb-8">This is a mock demo. No data leaves your browser.</p>
+      <div className="gradient-border">
+        <div className="inner rounded-2xl p-6">
+          <form onSubmit={save} className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm text-slate-700">Full Name</label>
+              <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Alex Patient" className="mt-1 bg-white/70" />
+            </div>
+            <div>
+              <label className="text-sm text-slate-700">Email</label>
+              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="mt-1 bg-white/70" />
+            </div>
+            <div className="sm:col-span-2 flex items-center gap-3 mt-2">
+              <Button type="submit" className="btn-primary rounded-full">Save</Button>
+              {saved ? <span className="text-sm text-emerald-700">Saved ✓</span> : null}
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
