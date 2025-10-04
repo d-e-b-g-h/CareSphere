@@ -46,7 +46,7 @@ export const features = [
     icon: "QrCode",
   },
   {
-    title: "Sharing &amp; Control",
+    title: "Sharing & Control",
     desc: "Short-lived QR/link, public read-only viewer, revoke anytime, activity timeline.",
     icon: "Share2",
   },
