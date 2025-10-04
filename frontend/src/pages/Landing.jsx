@@ -64,7 +64,7 @@ const MockPackCard = () => (
         <ul className="text-sm text-slate-600 list-disc pl-5">
           <li>Chief concern: Fainting spells</li>
           <li>Timeline: 2 weeks — 3 episodes</li>
-          <li>Meds &amp; allergies summarized</li>
+          <li>Meds & allergies summarized</li>
         </ul>
       </div>
     </div>
