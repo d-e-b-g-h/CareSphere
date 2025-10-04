@@ -24,17 +24,12 @@ import { features, navLinks, techPoints, uniquePoints, whyChoose } from "../mock
 
 const ICONS = { ShieldCheck, Lock, BadgeCheck, ClipboardCheck, QrCode, FileText, Stethoscope, Share2, Activity, Gavel, TimerReset };
 
-// Small helper for glass effect container
 const Glass = ({ className = "", children }) => (
-  <div
-    className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ${className}`}
-  >
-    {children}
-  </div>
+  <div className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ${className}`}>{children}</div>
 );
 
 const SectionTitle = ({ eyebrow, title, subtitle, align = "center" }) => (
-  <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}> 
+  <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}>
     {eyebrow ? <div className="text-sm tracking-wide text-emerald-700/80 mb-2">{eyebrow}</div> : null}
     <h2 className="heading-2 mb-3 text-balance" style={{color: "var(--brand-jade)"}}>{title}</h2>
     {subtitle ? <p className="body-large" style={{color: "var(--brand-muted)"}}>{subtitle}</p> : null}
@@ -95,16 +90,8 @@ const EmailCapture = ({ compact = false }) => {
 
   return (
     <form onSubmit={onSubmit} className={`flex ${compact ? "flex-col sm:flex-row" : "flex-col md:flex-row"} gap-3 w-full max-w-xl`}>
-      <Input
-        type="email"
-        placeholder="you@example.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="bg-white/70 border-white/40 backdrop-blur-md focus-visible:ring-emerald-500"
-      />
-      <Button type="submit" className="btn-primary rounded-full px-6 py-6 text-white" variant="default">
-        Create Your Pack
-      </Button>
+      <Input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-white/70 border-white/40 backdrop-blur-md focus-visible:ring-emerald-500" />
+      <Button type="submit" className="btn-primary rounded-full px-6 py-6 text-white" variant="default">Create Your Pack</Button>
     </form>
   );
 };
@@ -114,7 +101,6 @@ export default function Landing() {
   const navRef = useRef(null);
 
   useEffect(() => {
-    // subtle entry animation
     const el = heroRef.current;
     if (el) {
       el.style.opacity = 0;
@@ -126,7 +112,6 @@ export default function Landing() {
       });
     }
 
-    // nav scroll state
     const nav = navRef.current;
     const onScroll = () => {
       if (!nav) return;
@@ -144,7 +129,6 @@ export default function Landing() {
 
   return (
     <div className="relative">
-      {/* Floating Glass Nav */}
       <div ref={navRef} className="nav-header flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 pl-2">
           <div className="size-7 rounded-xl" style={{background: "var(--brand-mint)", border: "1px solid rgba(255,255,255,.7)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.6)"}} />
@@ -156,37 +140,26 @@ export default function Landing() {
           ))}
         </div>
         <div className="flex items-center gap-2 pr-2">
-          <Link to="/auth">
-            <Button className="btn-secondary rounded-full">Sign In</Button>
-          </Link>
-          <Link to="/auth">
-            <Button className="btn-primary rounded-full">Get Started</Button>
-          </Link>
+          <Link to="/auth"><Button className="btn-secondary rounded-full">Sign In</Button></Link>
+          <Link to="/auth"><Button className="btn-primary rounded-full">Get Started</Button></Link>
         </div>
       </div>
 
-      {/* Decorative floating blobs behind hero */}
       <div className="blob blob-1" />
       <div className="blob blob-2" />
 
-      {/* Hero Section */}
       <section id="hero" className="hero-section">
         <div ref={heroRef} className="hero-content">
           <h1 className="hero-title">Your Health, Prepared & Private.</h1>
           <p className="hero-subtitle">Turn everyday symptoms and health info into a clinician-ready Prepared Patient Pack and an ultra-minimal Emergency QR.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
-            <Link to="/auth">
-              <Button className="btn-primary rounded-full">Get Started <ArrowRight className="ml-2 size-4" /></Button>
-            </Link>
+            <Link to="/auth"><Button className="btn-primary rounded-full">Get Started <ArrowRight className="ml-2 size-4" /></Button></Link>
             <Button onClick={() => scrollTo('#features')} className="btn-secondary rounded-full" variant="outline">See Features</Button>
           </div>
           <HeroChips />
 
-          {/* Visual */}
           <div className="mt-10 grid md:grid-cols-2 gap-6 items-center">
-            <div className="order-2 md:order-1 text-left">
-              <MockPackCard />
-            </div>
+            <div className="order-2 md:order-1 text-left"><MockPackCard /></div>
             <div className="order-1 md:order-2">
               <Glass className="rounded-3xl p-6 bg-white/55 backdrop-blur-[20px]">
                 <div className="flex items-center gap-4">
@@ -202,84 +175,77 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Problem Statement */}
-      <section id="problem" className="container space-xl">
-        <SectionTitle
-          title="Clinics waste time. Emergencies are chaotic."
-          subtitle="Collecting scattered histories slows care. Bystanders often don’t know what to share safely."
-          align="left"
-        />
-        <div className="grid md:grid-cols-2 gap-6 items-center">
-          <div className="relative">
-            <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
-              <p className="font-semibold text-slate-700 mb-2">Messy papers & memory</p>
-              <ul className="text-sm text-slate-600 list-disc pl-5 space-y-1">
-                <li>Scattered test results</li>
-                <li>Forgotten meds & allergies</li>
-                <li>No clear timeline</li>
-              </ul>
-            </Glass>
-            <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px] absolute -right-6 -bottom-6 hidden md:block">
-              <p className="font-semibold text-slate-700 mb-2">Clean digital pack</p>
-              <p className="text-sm text-slate-600">One page. Actionable. Verifiable.</p>
-            </Glass>
-          </div>
-          <div>
-            <MockPackCard />
+      <section id="problem" className="tint-section">
+        <div className="container space-xl">
+          <SectionTitle title="Clinics waste time. Emergencies are chaotic." subtitle="Collecting scattered histories slows care. Bystanders often don’t know what to share safely." align="left" />
+          <div className="grid md:grid-cols-2 gap-6 items-center">
+            <div className="relative">
+              <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
+                <p className="font-semibold text-slate-700 mb-2">Messy papers & memory</p>
+                <ul className="text-sm text-slate-600 list-disc pl-5 space-y-1">
+                  <li>Scattered test results</li>
+                  <li>Forgotten meds & allergies</li>
+                  <li>No clear timeline</li>
+                </ul>
+              </Glass>
+              <Glass className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px] absolute -right-6 -bottom-6 hidden md:block">
+                <p className="font-semibold text-slate-700 mb-2">Clean digital pack</p>
+                <p className="text-sm text-slate-600">One page. Actionable. Verifiable.</p>
+              </Glass>
+            </div>
+            <div><MockPackCard /></div>
           </div>
         </div>
       </section>
 
-      {/* Unique */}
-      <section id="unique" className="container space-xl">
-        <SectionTitle
-          title="Preparation over hoarding. Privacy by default."
-          subtitle="CareSphere is built to surface only what matters, when it matters — and keep everything else private."
-        />
-        <div className="ai-grid">
-          {uniquePoints.map((u) => {
-            const I = ICONS[u.icon] || ShieldCheck;
-            return (
-              <div key={u.title} className="gradient-border">
-                <div className="inner p-5 rounded-[15px]">
-                  <div className="flex items-start gap-3">
-                    <I className="size-5 text-emerald-600" />
-                    <div>
-                      <div className="font-semibold text-slate-800">{u.title}</div>
-                      <p className="text-sm text-slate-600">{u.desc}</p>
+      <section id="unique" className="tint-section">
+        <div className="container space-xl">
+          <SectionTitle title="Preparation over hoarding. Privacy by default." subtitle="CareSphere is built to surface only what matters, when it matters — and keep everything else private." />
+          <div className="ai-grid">
+            {uniquePoints.map((u) => {
+              const I = ICONS[u.icon] || ShieldCheck;
+              return (
+                <div key={u.title} className="gradient-border">
+                  <div className="inner p-5 rounded-[15px]">
+                    <div className="flex items-start gap-3">
+                      <I className="size-5 text-emerald-600" />
+                      <div>
+                        <div className="font-semibold text-slate-800">{u.title}</div>
+                        <p className="text-sm text-slate-600">{u.desc}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="container space-xl">
-        <SectionTitle title="Everything You Need, Nothing You Don’t." />
-        <div className="ai-grid">
-          {features.map((f) => {
-            const I = ICONS[f.icon] || FileText;
-            return (
-              <div key={f.title} className="gradient-border">
-                <div className="inner p-6">
-                  <div className="flex items-start gap-3">
-                    <I className="size-6 text-emerald-600 shrink-0" />
-                    <div>
-                      <h4 className="product-card-title">{f.title}</h4>
-                      <p className="product-card-description">{f.desc}</p>
+      <section id="features" className="tint-section">
+        <div className="container space-xl">
+          <SectionTitle title="Everything You Need, Nothing You Don’t." />
+          <div className="ai-grid">
+            {features.map((f) => {
+              const I = ICONS[f.icon] || FileText;
+              return (
+                <div key={f.title} className="gradient-border">
+                  <div className="inner p-6">
+                    <div className="flex items-start gap-3">
+                      <I className="size-6 text-emerald-600 shrink-0" />
+                      <div>
+                        <h4 className="product-card-title">{f.title}</h4>
+                        <p className="product-card-description">{f.desc}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Technical Approach (Accordion) */}
       <section id="how" className="container space-xl">
         <SectionTitle title="How It Works Under the Hood" subtitle="A minimal, verifiable, privacy-first flow." />
         <Accordion type="single" collapsible className="max-w-2xl mx-auto">
@@ -302,28 +268,28 @@ export default function Landing() {
         </Accordion>
       </section>
 
-      {/* Why Choose */}
-      <section id="impact" className="container space-xl">
-        <SectionTitle title="High Impact. Low Friction. Works When It Matters." />
-        <div className="ai-grid">
-          {whyChoose.map((w) => {
-            const I = ICONS[w.icon] || Activity;
-            return (
-              <Glass key={w.title} className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
-                <div className="flex items-start gap-3">
-                  <I className="size-6 text-emerald-700" />
-                  <div>
-                    <div className="font-semibold text-slate-800">{w.title}</div>
-                    <p className="text-sm text-slate-600">{w.desc}</p>
+      <section id="impact" className="tint-section">
+        <div className="container space-xl">
+          <SectionTitle title="High Impact. Low Friction. Works When It Matters." />
+          <div className="ai-grid">
+            {whyChoose.map((w) => {
+              const I = ICONS[w.icon] || Activity;
+              return (
+                <Glass key={w.title} className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
+                  <div className="flex items-start gap-3">
+                    <I className="size-6 text-emerald-700" />
+                    <div>
+                      <div className="font-semibold text-slate-800">{w.title}</div>
+                      <p className="text-sm text-slate-600">{w.desc}</p>
+                    </div>
                   </div>
-                </div>
-              </Glass>
-            );
-          })}
+                </Glass>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
       <section id="cta" className="container space-2xl">
         <div className="gradient-border">
           <div className="inner rounded-3xl p-8 md:p-10" style={{background: "rgba(255,255,255,0.72)"}}>
@@ -333,15 +299,12 @@ export default function Landing() {
                 <p className="text-slate-600 mb-4">No account needed. Data stays private until you share.</p>
                 <EmailCapture />
               </div>
-              <div className="md:justify-self-end">
-                <MockPackCard />
-              </div>
+              <div className="md:justify-self-end"><MockPackCard /></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-white/40 bg-white/60 backdrop-blur-md">
         <div className="container py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-slate-600">© 2025 CareSphere. All rights reserved.</div>
@@ -357,7 +320,6 @@ export default function Landing() {
   );
 }
 
-// Demo route content (simple stub)
 export function DemoPage() {
   const [name, setName] = useState(localStorage.getItem("cs_demo_name") || "");
   const [email, setEmail] = useState(localStorage.getItem("cs_demo_email") || "");

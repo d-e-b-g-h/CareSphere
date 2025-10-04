@@ -23,14 +23,13 @@ code {
 *****************************/
 @layer base {
   :root {
-    /* Tailwind design tokens */
     --background: 0 0% 100%;
     --foreground: 0 0% 4%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 4%;
-    --primary: 164 69% 22%; /* deep jade */
+    --primary: 164 69% 22%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 12%;
@@ -45,22 +44,20 @@ code {
     --ring: 164 69% 22%;
     --radius: 0.75rem;
 
-    /* Brand palette */
-    --brand-ink: #0e1a16;        /* primary headings */
-    --brand-jade: #0f473d;       /* deep jade */
-    --brand-mint: #31c4a1;       /* accent mint */
+    --brand-ink: #0e1a16;
+    --brand-jade: #0f473d;
+    --brand-mint: #31c4a1;
     --brand-mint-strong: #19a17b;
-    --brand-pearl: #f7f9fb;      /* background pearl */
-    --brand-mist: #e9f4ff;       /* mist blue */
-    --brand-champagne: #f6eadf;  /* warm accent */
-    --brand-muted: #5b6b66;      /* body text */
+    --brand-pearl: #f7f9fb;
+    --brand-mist: #e9f4ff;
+    --brand-champagne: #f6eadf;
+    --brand-muted: #5b6b66;
 
-    /* Shadows */
     --elev-1: 0 8px 30px rgba(0,0,0,0.06);
     --elev-2: 0 18px 50px rgba(0,0,0,0.10);
   }
 
-  .dark { /* keep default dark tokens for completeness */
+  .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 5%;
@@ -85,14 +82,21 @@ code {
 
 @layer base {
   * { @apply border-border; }
-  body { background: var(--brand-pearl); color: hsl(var(--foreground)); }
+  /* Global tinted background to reduce stark white */
+  body {
+    background:
+      radial-gradient(1200px 800px at 0% 0%, rgba(233,244,255,0.55), transparent 60%),
+      radial-gradient(1000px 600px at 100% 0%, rgba(198,240,224,0.50), transparent 60%),
+      radial-gradient(1000px 700px at 50% 100%, rgba(246,234,223,0.45), transparent 60%),
+      #f2f6f6;
+    color: hsl(var(--foreground));
+  }
 }
 
 /***********************
   PREMIUM COMPONENTS
 ***********************/
 @layer components {
-  /* Hero with restrained gradients (<=20% area) */
   .hero-section {
     background:
       radial-gradient(1200px 600px at 10% 10%, color-mix(in oklab, var(--brand-mist) 55%, transparent) 0%, transparent 60%),
@@ -105,56 +109,48 @@ code {
   .hero-title { font-weight: 800; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.02em; color: var(--brand-jade); }
   .hero-subtitle { font-size: clamp(1.1rem, 3vw, 1.25rem); color: var(--brand-muted); }
 
-  /* Decorative floating blobs */
   .blob { position: absolute; border-radius: 9999px; filter: blur(30px); opacity: .5; pointer-events: none; }
   .blob-1 { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, #dff7ef, transparent 60%); top: -80px; left: -60px; animation: float 14s ease-in-out infinite; }
   .blob-2 { width: 560px; height: 560px; background: radial-gradient(circle at 70% 40%, #ffeede, transparent 60%); bottom: -120px; right: -120px; animation: float 16s ease-in-out infinite; }
   @keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-12px) } }
 
-  /* Floating glass nav */
   .nav-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; height: 3.5rem; background: rgba(255,255,255,0.54); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); border: 0.5px solid rgba(255,255,255,0.6); border-radius: 9999px; margin: 1.25rem; box-shadow: var(--elev-1); transition: all .25s ease; }
   .nav-header.scrolled { background: rgba(255,255,255,0.78); box-shadow: var(--elev-2); }
   @media (max-width: 768px) { .nav-header { margin: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.08); } }
 
-  /* Layout */
   .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
   .space-xl { margin-top: 3rem; margin-bottom: 3rem; }
   .space-2xl { margin-top: 4rem; margin-bottom: 4rem; }
   .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
 
-  /* Chips */
   .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 9999px; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.08); backdrop-filter: blur(12px); font-weight: 600; color: var(--brand-jade); }
 
-  /* Cards */
   .product-card { border-radius: 14px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; cursor: pointer; overflow: hidden; background: rgba(255,255,255,0.72); backdrop-filter: blur(14px) saturate(140%); box-shadow: var(--elev-1); }
   .product-card:hover { transform: translateY(-2px); box-shadow: var(--elev-2); }
   .product-card-title { font-weight: 700; font-size: 1.125rem; margin-bottom: 6px; color: var(--brand-jade); }
   .product-card-description { font-size: .95rem; color: var(--brand-muted); margin: 0; }
 
-  /* Gradient border utility */
   .gradient-border { position: relative; background: linear-gradient(135deg, rgba(49,196,161,.5), rgba(233,244,255,.5)); padding: 1px; border-radius: 16px; }
   .gradient-border > .inner { background: rgba(255,255,255,0.7); backdrop-filter: blur(14px); border-radius: 15px; }
 
-  /* Buttons */
   .btn-primary { background: linear-gradient(135deg, var(--brand-mint), var(--brand-mint-strong)); color: white; border: none; padding: 12px 20px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 8px 22px rgba(25,161,123,0.28); }
   .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(25,161,123,0.34); }
   .btn-secondary { background: transparent; color: var(--brand-jade); border: 1px solid rgba(0,0,0,0.1); padding: 12px 20px; font-weight: 600; }
   .btn-secondary:hover { background: rgba(0,0,0,0.04); }
 
-  /* Typography */
   .heading-2 { font-weight: 800; font-size: clamp(1.875rem, 4vw, 3rem); line-height: .95; letter-spacing: -0.015em; color: var(--brand-jade); }
   .heading-3 { font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.2; color: var(--brand-jade); }
   .body-large { font-size: clamp(1.05rem, 2.5vw, 1.2rem); line-height: 1.6; color: var(--brand-muted); }
 
-  /* Links */
   .nav-link { color: #6b7c76; font-weight: 600; padding: 6px 12px; border-radius: 9999px; transition: color .2s ease, background .2s ease; }
   .nav-link:hover { color: var(--brand-jade); background: rgba(0,0,0,0.04); }
   .link-text { color: var(--brand-jade); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
-  /* Glass helper */
   .glass-panel { background: rgba(255,255,255,0.62); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border-radius: 16px; }
+
+  /* Tinted section bands to reduce white space feel */
+  .tint-section { background: linear-gradient(180deg, rgba(242,250,247,0.55), rgba(233,244,255,0.45)); border-top: 1px solid rgba(0,0,0,0.04); border-bottom: 1px solid rgba(0,0,0,0.04); }
 }
 
-/* Smooth anchor scroll with fixed nav offset */
 html { scroll-behavior: smooth; }
 section { scroll-margin-top: 110px; }
