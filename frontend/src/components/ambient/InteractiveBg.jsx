@@ -97,12 +97,13 @@ export const InteractiveBg = () => {
           const dx = p1.x - p0.x;
           const dy = p1.y - p0.y;
           const dist = Math.hypot(dx, dy) || 1;
-          const width = Math.min(10, 2 + (8 / Math.max(1, dist)) * intensityRef.current);
+          const width = Math.min(8, 1.6 + (6 / Math.max(1, dist)) * intensityRef.current);
 
           const grad = ctx.createLinearGradient(p0.x, p0.y, p1.x, p1.y);
-          grad.addColorStop(0, "rgba(15,71,61,0.18)"); // deep jade
-          grad.addColorStop(1, "rgba(49,196,161,0.14)"); // mint
+          grad.addColorStop(0, "rgba(15,71,61,0.10)"); // deep jade
+          grad.addColorStop(1, "rgba(49,196,161,0.08)"); // mint
 
+          ctx.globalAlpha = 0.8; // ensure overall transparency
           ctx.strokeStyle = grad;
           ctx.lineWidth = width;
           ctx.lineCap = "round";
