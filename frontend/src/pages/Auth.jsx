@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs";
-import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp";
 import { Button } from "../components/ui/button";
 import { toast } from "../components/ui/sonner";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
-import { generateOtp, upsertUser, verifyOtp, verifyPassword, setSessionUser, getUsers } from "../mock/authMock";
+import { generateOtp, upsertUser, verifyOtp, verifyPassword, setSessionUser, getUsers, normalizePhone, isValidEmail, isValidPhone, getUserByEmailOrPhone } from "../mock/authMock";
 
 const Glass = ({ className = "", children }) => (
   <div className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ${className}`}>{children}</div>
@@ -55,30 +54,49 @@ export default function Auth() {
   );
 }
 
+function ChannelToggle({ channel, setChannel }) {
+  return (
+    <div className="inline-flex rounded-full bg-white/70 backdrop-blur p-1">
+      <button type="button" onClick={() => setChannel("email")} className={`px-4 py-2 rounded-full text-sm font-medium ${channel === "email" ? "bg-white shadow" : "text-slate-600"}`}>Email</button>
+      <button type="button" onClick={() => setChannel("sms")} className={`px-4 py-2 rounded-full text-sm font-medium ${channel === "sms" ? "bg-white shadow" : "text-slate-600"}`}>SMS</button>
+    </div>
+  );
+}
+
 function SignUpForm({ onSuccess }) {
   const [step, setStep] = useState("details");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [otp, setOtp] = useState("");
+  const [channel, setChannel] = useState("email");
+  const [identifier, setIdentifier] = useState("");
 
-  const valid = useMemo(() => email && /.+@.+\..+/.test(email) && name && password.length >= 8 && password === confirm, [email, name, password, confirm]);
+  const valid = useMemo(() => {
+    const passOk = password.length >= 8 && password === confirm;
+    const contactOk = isValidEmail(email) || isValidPhone(normalizePhone(phone));
+    return passOk && contactOk && !!name;
+  }, [email, phone, password, confirm, name]);
 
   const createAccount = (e) => {
     e.preventDefault();
-    if (!valid) { toast("Please complete all fields (password ≥ 8)." ); return; }
-    upsertUser({ name, email, password });
-    const code = generateOtp(email);
-    toast(`Mock OTP sent to ${email}: ${code}`);
+    if (!valid) { toast("Please fill name, valid email or phone, and strong password."); return; }
+    const normPhone = normalizePhone(phone);
+    upsertUser({ name, email, password, phone: normPhone });
+    const id = channel === "sms" ? (normPhone || email) : (email || normPhone);
+    const code = generateOtp(id);
+    setIdentifier(id);
+    toast(`Mock ${channel.toUpperCase()} OTP sent to ${id}: ${code}`);
     setStep("verify");
   };
 
   const verify = (e) => {
     e.preventDefault();
-    const res = verifyOtp(email, otp);
+    const res = verifyOtp(identifier, otp);
     if (!res.ok) { toast(res.reason || "Invalid OTP"); return; }
-    setSessionUser({ name, email });
+    setSessionUser({ name, email, phone: normalizePhone(phone) });
     toast("Signed up successfully (local mock). Redirecting...");
     onSuccess?.();
   };
@@ -96,12 +114,20 @@ function SignUpForm({ onSuccess }) {
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="mt-1 bg-white/70" />
           </div>
           <div>
+            <label className="text-sm text-slate-700">Phone (default +91)</label>
+            <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98765 43210" className="mt-1 bg-white/70" />
+          </div>
+          <div>
             <label className="text-sm text-slate-700">Password</label>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" className="mt-1 bg-white/70" />
           </div>
           <div>
             <label className="text-sm text-slate-700">Confirm Password</label>
             <Input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Re-enter your password" className="mt-1 bg-white/70" />
+          </div>
+          <div className="md:col-span-2 flex items-center gap-4 mt-1">
+            <span className="text-sm text-slate-700">Send OTP via</span>
+            <ChannelToggle channel={channel} setChannel={setChannel} />
           </div>
           <div className="md:col-span-2 flex items-center gap-3 mt-2">
             <Button disabled={!valid} type="submit" className="btn-primary rounded-full">Create Account</Button>
@@ -111,7 +137,7 @@ function SignUpForm({ onSuccess }) {
       ) : (
         <form onSubmit={verify} className="space-y-4">
           <div>
-            <div className="text-sm text-slate-700 mb-2">Enter 6-digit code sent to {email}</div>
+            <div className="text-sm text-slate-700 mb-2">Enter 6-digit code sent to {identifier}</div>
             <InputOTP maxLength={6} value={otp} onChange={setOtp}>
               <InputOTPGroup>
                 {Array.from({ length: 6 }).map((_, i) => (<InputOTPSlot key={i} index={i} />))}
@@ -120,7 +146,7 @@ function SignUpForm({ onSuccess }) {
           </div>
           <div className="flex items-center gap-3">
             <Button type="submit" className="btn-primary rounded-full">Verify & Continue</Button>
-            <Button type="button" variant="outline" className="btn-secondary rounded-full" onClick={() => { const c = generateOtp(email); toast(`New mock OTP: ${c}`); }}>Resend OTP</Button>
+            <Button type="button" variant="outline" className="btn-secondary rounded-full" onClick={() => { const c = generateOtp(identifier); toast(`New mock OTP to ${identifier}: ${c}`); }}>Resend OTP</Button>
           </div>
         </form>
       )}
@@ -131,32 +157,42 @@ function SignUpForm({ onSuccess }) {
 function SignInForm({ onSuccess }) {
   const [method, setMethod] = useState("password"); // 'password' | 'otp'
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
+  const [channel, setChannel] = useState("email");
+  const [identifier, setIdentifier] = useState("");
 
   const sendOtp = () => {
-    if (!/.+@.+\..+/.test(email)) { toast("Enter a valid email"); return; }
-    const c = generateOtp(email);
-    toast(`Mock OTP sent to ${email}: ${c}`);
+    const normPhone = normalizePhone(phone);
+    const canEmail = isValidEmail(email);
+    const canSms = isValidPhone(normPhone);
+    const useId = channel === "sms" ? (canSms ? normPhone : "") : (canEmail ? email : "");
+    if (!useId) { toast(channel === "sms" ? "Enter valid phone (+country)" : "Enter valid email"); return; }
+    const c = generateOtp(useId);
+    setIdentifier(useId);
+    toast(`Mock ${channel.toUpperCase()} OTP sent to ${useId}: ${c}`);
   };
 
   const signInWithPassword = (e) => {
     e.preventDefault();
-    if (!/.+@.+\..+/.test(email) || password.length < 8) { toast("Invalid email or password"); return; }
+    if (!isValidEmail(email) || password.length < 8) { toast("Invalid email or password"); return; }
     const ok = verifyPassword({ email, password });
     if (!ok) { toast("No such user or wrong password (mock)"); return; }
     const users = getUsers();
     const u = users[email.toLowerCase()];
-    setSessionUser({ name: u?.name || email.split("@")[0], email });
+    setSessionUser({ name: u?.name || email.split("@")[0], email, phone: u?.phone });
     toast("Signed in (password, local mock)");
     onSuccess?.();
   };
 
   const verifyOtpSignIn = (e) => {
     e.preventDefault();
-    const res = verifyOtp(email, otp);
+    const res = verifyOtp(identifier, otp);
     if (!res.ok) { toast(res.reason || "Invalid OTP"); return; }
-    setSessionUser({ name: email.split("@")[0], email });
+    const user = getUserByEmailOrPhone({ email, phone });
+    const name = user?.name || (email ? email.split("@")[0] : (phone || "").slice(-4));
+    setSessionUser({ name, email: user?.email || email, phone: user?.phone || normalizePhone(phone) });
     toast("Signed in (OTP, local mock)");
     onSuccess?.();
   };
@@ -185,17 +221,25 @@ function SignInForm({ onSuccess }) {
         </form>
       ) : (
         <form onSubmit={verifyOtpSignIn} className="space-y-4">
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-slate-700">Send OTP via</span>
+            <ChannelToggle channel={channel} setChannel={setChannel} />
+          </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="text-sm text-slate-700">Email</label>
               <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="mt-1 bg-white/70" />
             </div>
-            <div className="flex items-end">
-              <Button type="button" onClick={sendOtp} className="btn-secondary rounded-full w-full">Send OTP</Button>
+            <div>
+              <label className="text-sm text-slate-700">Phone (default +91)</label>
+              <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98765 43210" className="mt-1 bg-white/70" />
+            </div>
+            <div className="sm:col-span-2 flex items-center gap-3">
+              <Button type="button" onClick={sendOtp} className="btn-secondary rounded-full">Send OTP</Button>
             </div>
           </div>
           <div>
-            <div className="text-sm text-slate-700 mb-2">Enter 6-digit code</div>
+            <div className="text-sm text-slate-700 mb-2">Enter 6-digit code {identifier ? `sent to ${identifier}` : ""}</div>
             <InputOTP maxLength={6} value={otp} onChange={setOtp}>
               <InputOTPGroup>
                 {Array.from({ length: 6 }).map((_, i) => (<InputOTPSlot key={i} index={i} />))}
