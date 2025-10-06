@@ -23,24 +23,28 @@ import {
 } from "lucide-react";
 import { features, navLinks, techPoints, uniquePoints, whyChoose } from "../mock/mock";
 
-const ICONS = { ShieldCheck, Lock, BadgeCheck, ClipboardCheck, QrCode, FileText, Stethoscope, Share2, Activity, Gavel, TimerReset };
+// Map icons
+const ICONS = { ShieldCheck, Lock, BadgeCheck, ClipboardCheck, QrCode, FileText, Stethoscope, Share2, Activity, Gavel, TimerReset, Check };
 
+// Glass panel wrapper
 const Glass = ({ className = "", children }) => (
   <div
-    className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ${className}`}
+    className={`glass-panel border border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-transform duration-300 hover:scale-105 ${className}`}
   >
     {children}
   </div>
 );
 
+// Section title
 const SectionTitle = ({ eyebrow, title, subtitle, align = "center" }) => (
-  <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}> 
+  <div className={`mx-auto ${align === "center" ? "text-center" : "text-left"} max-w-3xl mb-10`}>
     {eyebrow ? <div className="text-sm tracking-wide text-emerald-700/80 mb-2">{eyebrow}</div> : null}
-    <h2 className="heading-2 mb-3 text-balance" style={{color: "var(--brand-jade)"}}>{title}</h2>
-    {subtitle ? <p className="body-large" style={{color: "var(--brand-muted)"}}>{subtitle}</p> : null}
+    <h2 className="heading-2 mb-3 text-balance" style={{ color: "var(--brand-jade)" }}>{title}</h2>
+    {subtitle ? <p className="body-large" style={{ color: "var(--brand-muted)" }}>{subtitle}</p> : null}
   </div>
 );
 
+// Mock QR for visual
 const QRMock = () => (
   <div className="size-24 rounded-md overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 p-2 border border-white/50">
     <div className="grid grid-cols-6 grid-rows-6 gap-1 h-full">
@@ -51,13 +55,15 @@ const QRMock = () => (
   </div>
 );
 
+// Prepared Patient Pack card with icon & hover effect
 const MockPackCard = () => (
   <Glass className="rounded-2xl p-5 backdrop-blur-[18px] backdrop-saturate-150 bg-white/60">
     <div className="flex items-start gap-4">
       <div className="shrink-0"><QRMock /></div>
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <BadgeCheck className="size-4 text-emerald-600" />
+          {/* Changed icon from BadgeCheck to ClipboardCheck */}
+          <ClipboardCheck className="size-4 text-emerald-600" />
           <span className="text-sm font-semibold text-emerald-700">Verified</span>
         </div>
         <h4 className="font-semibold text-slate-800">Prepared Patient Pack</h4>
@@ -71,6 +77,9 @@ const MockPackCard = () => (
   </Glass>
 );
 
+
+
+// Hero chips under hero text
 const HeroChips = () => (
   <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
     {["Client-side encrypted", "Offline emergency QR", "No account needed"].map((t) => (
@@ -79,6 +88,7 @@ const HeroChips = () => (
   </div>
 );
 
+// Email capture component
 const EmailCapture = ({ compact = false }) => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -109,6 +119,7 @@ const EmailCapture = ({ compact = false }) => {
   );
 };
 
+// Landing Page
 export default function Landing() {
   const heroRef = useRef(null);
   const navRef = useRef(null);
@@ -142,10 +153,10 @@ export default function Landing() {
 
   return (
     <div className="relative">
-      {/* Interactive background canvas (fixed) */}
+      {/* Interactive background */}
       <InteractiveBg />
 
-      {/* Floating Glass Nav */}
+      {/* Floating Nav */}
       <div ref={navRef} className="nav-header flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 pl-2">
           <div className="size-7 rounded-xl" style={{background: "var(--brand-mint)", border: "1px solid rgba(255,255,255,.7)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.6)"}} />
@@ -185,13 +196,13 @@ export default function Landing() {
               <MockPackCard />
             </div>
             <div className="order-1 md:order-2">
-              <Glass className="rounded-3xl p-6 bg-white/55 backdrop-blur-[20px]">
+              <Glass className="rounded-3xl p-6 bg-white/55 backdrop-blur-[20px] cursor-pointer transition-transform duration-300 hover:scale-105">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
                     <h4 className="text-slate-800 font-semibold mb-1">Emergency QR</h4>
                     <p className="text-sm text-slate-600">Ultra-minimal, signed, and reveals only essentials offline.</p>
                   </div>
-                  <QRMock />
+                  <QrCode className="size-6 text-emerald-600" />
                 </div>
               </Glass>
             </div>
@@ -238,7 +249,7 @@ export default function Landing() {
             const I = ICONS[u.icon] || ShieldCheck;
             return (
               <div key={u.title} className="gradient-border">
-                <div className="inner p-5 rounded-[15px]">
+                <div className="inner p-5 rounded-[15px] transition-transform duration-300 hover:scale-105">
                   <div className="flex items-start gap-3">
                     <I className="size-5 text-emerald-600" />
                     <div>
@@ -261,7 +272,7 @@ export default function Landing() {
             const I = ICONS[f.icon] || FileText;
             return (
               <div key={f.title} className="gradient-border">
-                <div className="inner p-6">
+                <div className="inner p-6 transition-transform duration-300 hover:scale-105">
                   <div className="flex items-start gap-3">
                     <I className="size-6 text-emerald-600 shrink-0" />
                     <div>
@@ -276,7 +287,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Technical Approach (Accordion) */}
+      {/* How It Works */}
       <section id="how" className="container space-xl">
         <SectionTitle title="How It Works Under the Hood" subtitle="A minimal, verifiable, privacy-first flow." />
         <Accordion type="single" collapsible className="max-w-2xl mx-auto">
@@ -306,7 +317,7 @@ export default function Landing() {
           {whyChoose.map((w) => {
             const I = ICONS[w.icon] || Activity;
             return (
-              <Glass key={w.title} className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px]">
+              <Glass key={w.title} className="rounded-2xl p-6 bg-white/60 backdrop-blur-[16px] transition-transform duration-300 hover:scale-105">
                 <div className="flex items-start gap-3">
                   <I className="size-6 text-emerald-700" />
                   <div>
@@ -354,6 +365,7 @@ export default function Landing() {
   );
 }
 
+// Demo Page
 export function DemoPage() {
   const [name, setName] = useState(localStorage.getItem("cs_demo_name") || "");
   const [email, setEmail] = useState(localStorage.getItem("cs_demo_email") || "");
